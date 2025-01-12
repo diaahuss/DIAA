@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const users = {}; // Object to store user data with email as the key
 
+    // Screens
     const openScreen = document.getElementById('openScreen');
     const signupScreen = document.getElementById('signupScreen');
     const rewardScreen = document.getElementById('rewardScreen');
     const transactionScreen = document.getElementById('transactionScreen');
 
+    // Input Elements
     const openEmail = document.getElementById('openEmail');
     const openPassword = document.getElementById('openPassword');
     const signupEmail = document.getElementById('signupEmail');
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
+    // EmailJS Config
     const serviceID = "service_4b371jn";
     const templateID = "template_y0f3pw9";
     const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
@@ -73,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openScreen.classList.remove('hidden');
     });
 
-    // Rewards Submission Functionality
+    // Reward Submission Functionality
     document.getElementById('submitRewardBtn').addEventListener('click', () => {
         const name = rewardName.value.trim();
         const email = rewardEmail.value.trim();
@@ -102,15 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
         businessName.value = '';
         businessEmail.value = '';
 
-          // EmailJS Send Email
-        emailjs.send("service_4b371jn", "template_y0f3pw9", {
+        // EmailJS Send Email
+        emailjs.send(serviceID, templateID, {
             name: name,
             email: email,
             voucher_code: voucher,
             wallet_address: wallet,
             business_name: business,
             business_email: businessEmailValue,
-        })
+        }, userID)
         .then(() => {
             alert("Reward data has been emailed to RWCOIN successfully!");
         })
@@ -119,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to send reward data. Please try again.");
         });
     });
-  
-    // Back Buttons
+
+    // Back Button Handlers
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
         rewardScreen.classList.remove('hidden');
