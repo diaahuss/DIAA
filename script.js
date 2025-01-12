@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const users = {}; // Object to store user data with email as the key
+    // Load users from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || {};
 
+    // Screens
     const openScreen = document.getElementById('openScreen');
     const signupScreen = document.getElementById('signupScreen');
     const rewardScreen = document.getElementById('rewardScreen');
     const transactionScreen = document.getElementById('transactionScreen');
 
+    // Inputs
     const openEmail = document.getElementById('openEmail');
     const openPassword = document.getElementById('openPassword');
     const signupEmail = document.getElementById('signupEmail');
@@ -19,9 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
+    // EmailJS Data
     const serviceID = "service_4b371jn";
     const templateID = "template_y0f3pw9";
-    const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
+    const userID = "sz2ImWOwFnVKy4qrF";
+
+    // Clear login fields on page load
+    openEmail.value = '';
+    openPassword.value = '';
+
+    // Save users to localStorage
+    const saveUsers = () => {
+        localStorage.setItem('users', JSON.stringify(users));
+    };
 
     // Login Functionality
     document.getElementById('loginBtn').addEventListener('click', () => {
@@ -62,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         users[email] = { name, password };
+        saveUsers(); // Save users to localStorage
         alert("Signup successful! Please log in.");
 
         signupEmail.value = '';
