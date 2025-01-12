@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Load users from localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const users = {}; // Object to store user data with email as the key
 
-    // Screens
     const openScreen = document.getElementById('openScreen');
     const signupScreen = document.getElementById('signupScreen');
     const rewardScreen = document.getElementById('rewardScreen');
     const transactionScreen = document.getElementById('transactionScreen');
 
-    // Inputs
     const openEmail = document.getElementById('openEmail');
     const openPassword = document.getElementById('openPassword');
     const signupEmail = document.getElementById('signupEmail');
@@ -22,19 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
-    // EmailJS Data
     const serviceID = "service_4b371jn";
     const templateID = "template_y0f3pw9";
-    const userID = "sz2ImWOwFnVKy4qrF";
-
-    // Clear login fields on page load
-    openEmail.value = '';
-    openPassword.value = '';
-
-    // Save users to localStorage
-    const saveUsers = () => {
-        localStorage.setItem('users', JSON.stringify(users));
-    };
+    const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
 
     // Login Functionality
     document.getElementById('loginBtn').addEventListener('click', () => {
@@ -75,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         users[email] = { name, password };
-        saveUsers(); // Save users to localStorage
         alert("Signup successful! Please log in.");
 
         signupEmail.value = '';
@@ -116,24 +102,24 @@ document.addEventListener('DOMContentLoaded', () => {
         businessName.value = '';
         businessEmail.value = '';
 
-        // EmailJS Send Email
-        emailjs.send(serviceID, templateID, {
+          // EmailJS Send Email
+        emailjs.send("service_4b371jn", "template_y0f3pw9", {
             name: name,
             email: email,
             voucher_code: voucher,
             wallet_address: wallet,
             business_name: business,
             business_email: businessEmailValue,
-        }, userID)
+        })
         .then(() => {
-            alert("Reward data has been emailed successfully!");
+            alert("Reward data has been emailed to RWCOIN successfully!");
         })
         .catch(error => {
             console.error("Error sending email:", error);
             alert("Failed to send reward data. Please try again.");
         });
     });
-
+  
     // Back Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
