@@ -1,119 +1,137 @@
-// Utility Function to Reset Fields 
-function resetFields() {
-  document.querySelectorAll('input').forEach(input => (input.value = ""));
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const users = {}; // Object to store user data with email as the key
 
-// Navigation Handlers
-document.getElementById("go-to-sign-up").addEventListener("click", () => {
-  resetFields();
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("sign-up-screen").classList.remove("hidden");
-});
+    const openScreen = document.getElementById('openScreen');
+    const signupScreen = document.getElementById('signupScreen');
+    const rewardScreen = document.getElementById('rewardScreen');
+    const transactionScreen = document.getElementById('transactionScreen');
 
-document.querySelectorAll(".back-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    resetFields();
-    document.querySelectorAll(".screen").forEach(screen => screen.classList.add("hidden"));
-    document.getElementById("login-screen").classList.remove("hidden");
-  });
-});
+    const openEmail = document.getElementById('openEmail');
+    const openPassword = document.getElementById('openPassword');
+    const signupEmail = document.getElementById('signupEmail');
+    const signupPassword = document.getElementById('signupPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const nameInput = document.getElementById('name');
+    const rewardEmail = document.getElementById('rewardEmail');
+    const rewardName = document.getElementById('rewardName');
+    const voucherCode = document.getElementById('voucherCode');
+    const walletAddress = document.getElementById('walletAddress');
+    const businessName = document.getElementById('businessName');
+    const businessEmail = document.getElementById('businessEmail');
 
-// Store User Data Locally
-function storeUserData(user) {
-  localStorage.setItem("cryptozUser", JSON.stringify(user));
-}
+    // Login Functionality
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const email = openEmail.value.trim();
+        const password = openPassword.value.trim();
 
-// Retrieve User Data
-function getUserData() {
-  const userData = localStorage.getItem("cryptozUser");
-  return userData ? JSON.parse(userData) : null;
-}
+        if (users[email] && users[email].password === password) {
+            // Successful login
+            openScreen.classList.add('hidden');
+            rewardScreen.classList.remove('hidden');
 
-// Sign-Up Button Handler
-document.getElementById("sign-up-btn").addEventListener("click", () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("sign-up-email").value.trim();
-  const password = document.getElementById("sign-up-password").value.trim();
-  const confirmPassword = document.getElementById("confirm-password").value.trim();
-
-  if (name && email && password && password === confirmPassword) {
-    storeUserData({ name, email, password });
-    alert("Sign-Up Successful. Please log in.");
-    resetFields();
-    document.getElementById("sign-up-screen").classList.add("hidden");
-    document.getElementById("login-screen").classList.remove("hidden");
-  } else {
-    alert("Please fill all fields correctly and ensure passwords match.");
-  }
-});
-
-// Login Button Handler
-document.getElementById("login-btn").addEventListener("click", () => {
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value.trim();
-
-  const user = getUserData();
-  if (user && user.email === email && user.password === password) {
-    alert("Login Successful");
-    resetFields();
-    document.getElementById("name-display").value = user.name; // Populate name
-    document.getElementById("email-display").value = user.email; // Populate email
-    document.getElementById("login-screen").classList.add("hidden");
-    document.getElementById("rewards-screen").classList.remove("hidden");
-  } else {
-    alert("Invalid email or password.");
-  }
-});
-
-// Rewards Submission Handler
-document.getElementById("submit-reward-btn").addEventListener("click", () => {
-  const voucherCode = document.getElementById("voucher-code").value.trim();
-  const amount = document.getElementById("amount").value.trim();
-  const walletAddress = document.getElementById("wallet-address").value.trim();
-  const businessEmail = document.getElementById("business-email").value.trim();
-  const user = getUserData();
-
-  if (voucherCode && amount && walletAddress && businessEmail && user) {
-    if (isNaN(amount) || parseFloat(amount) <= 0) {
-      alert("Please enter a valid reward amount.");
-      return;
-    }
-
-    // Send email to company
-    sendEmailToCompany({
-      name: user.name,
-      amount: amount,
-      wallet: walletAddress,
-      businessEmail: businessEmail,
+            // Populate rewards screen fields
+            rewardEmail.value = email;
+            rewardName.value = users[email].name;
+        } else {
+            alert("Invalid email or password.");
+        }
     });
 
-    alert("Reward Submitted Successfully!");
-    resetFields();
-    document.getElementById("rewards-screen").classList.add("hidden");
-    document.getElementById("transaction-screen").classList.remove("hidden");
+    // Signup Functionality
+    document.getElementById('signupSubmitBtn').addEventListener('click', () => {
+        const email = signupEmail.value.trim();
+        const password = signupPassword.value.trim();
+        const confirmPass = confirmPassword.value.trim();
+        const name = nameInput.value.trim();
 
-    // Update transaction details
-    document.getElementById("transaction-date").textContent = new Date().toLocaleString();
-    document.getElementById("transaction-amount").textContent = `$${amount}`;
-    document.getElementById("transaction-wallet").textContent = walletAddress;
-  } else {
-    alert("Please fill all fields.");
-  }
-});
+        if (!email || !password || !confirmPass || !name) {
+            alert("Please fill in all fields.");
+            return;
+        }
 
-// Function to Send Email to Company
-function sendEmailToCompany(details) {
-  emailjs.send("service_4b371jn", "template_y0f3pw9", {
-    name: details.name,
-    amount: details.amount,
-    wallet: details.wallet,
-    businessEmail: details.businessEmail,
-    note: "The app was used, and the customer has requested coins. Please transfer the amount to your bank account.",
-  }, "sz2ImWOwFnVKy4qrF")
-    .then((response) => {
-      console.log("Email sent successfully to company:", response);
-    })
-    .catch((error) => {
-      console.error("Error sending email to company:", error);
+        if (password !== confirmPass) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        if (users[email]) {
+            alert("This email is already registered.");
+            return;
+        }
+
+        // Register user
+        users[email] = { name, password };
+        alert("Signup successful! Please log in.");
+
+        // Clear signup form
+        signupEmail.value = '';
+        signupPassword.value = '';
+        confirmPassword.value = '';
+        nameInput.value = '';
+
+        // Navigate back to login
+        signupScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
     });
-}
+
+    // Rewards Submission Functionality
+    document.getElementById('submitRewardBtn').addEventListener('click', () => {
+        const name = rewardName.value.trim();
+        const email = rewardEmail.value.trim();
+        const voucher = voucherCode.value.trim();
+        const wallet = walletAddress.value.trim();
+        const business = businessName.value.trim();
+        const businessEmailValue = businessEmail.value.trim();
+
+        if (!name || !email || !voucher || !wallet || !business || !businessEmailValue) {
+            alert("Please complete all fields.");
+            return;
+        }
+
+        // Navigate to transaction screen
+        transactionScreen.classList.remove('hidden');
+        rewardScreen.classList.add('hidden');
+
+        // Populate transaction screen
+        document.getElementById('transName').textContent = name;
+        document.getElementById('transEmail').textContent = email;
+        document.getElementById('transVoucherCode').textContent = voucher;
+        document.getElementById('transWallet').textContent = wallet;
+        document.getElementById('transBusinessName').textContent = business;
+        document.getElementById('transBusinessEmail').textContent = businessEmailValue;
+
+        // Clear reward form fields
+        voucherCode.value = '';
+        walletAddress.value = '';
+        businessName.value = '';
+        businessEmail.value = '';
+    });
+
+    // Back Button from Transaction to Reward Screen
+    document.getElementById('backToReward').addEventListener('click', () => {
+        transactionScreen.classList.add('hidden');
+        rewardScreen.classList.remove('hidden');
+    });
+
+    // Back Button from Reward to Login Screen
+    document.getElementById('backToLogin').addEventListener('click', () => {
+        rewardScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
+
+        // Clear login fields
+        openEmail.value = '';
+        openPassword.value = '';
+    });
+
+    // Navigate to Signup Screen
+    document.getElementById('signupBtn').addEventListener('click', () => {
+        openScreen.classList.add('hidden');
+        signupScreen.classList.remove('hidden');
+    });
+
+    // Back Button from Signup to Login Screen
+    document.getElementById('backToOpen').addEventListener('click', () => {
+        signupScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
+    });
+});
