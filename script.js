@@ -26,60 +26,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const templateID = "template_y0f3pw9";
     const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
 
-    // Clear login fields on page load
-    openEmail.value = '';
+   // Clear login fields on page load
+openEmail.value = '';
+openPassword.value = '';
+
+// Login Functionality
+document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = openEmail.value.trim();
+    const password = openPassword.value.trim();
+
+    if (users[email] && users[email].password === password) {
+        openScreen.classList.add('hidden');
+        rewardScreen.classList.remove('hidden');
+
+        // Pre-fill reward email and name
+        rewardEmail.value = email;
+        rewardName.value = users[email].name;
+    } else {
+        alert("Invalid email or password.");
+    }
+});
+
+// Back to Login Functionality (Logout or Navigate Back)
+document.getElementById('backToLogin').addEventListener('click', () => {
+    rewardScreen.classList.add('hidden');
+    openScreen.classList.remove('hidden');
+
+    // Reset email and password fields
+    openEmail.value = ''; // Clear the email field
     openPassword.value = '';
-    
-    // Login Functionality
-    document.getElementById('loginBtn').addEventListener('click', () => {
-        const email = openEmail.value.trim();
-        const password = openPassword.value.trim();
-
-        if (users[email] && users[email].password === password) {
-            openScreen.classList.add('hidden');
-            rewardScreen.classList.remove('hidden');
-
-            rewardEmail.value = email;
-            rewardName.value = users[email].name;
-        } else {
-            alert("Invalid email or password.");
-        }
-    });
-
-    // Signup Functionality
-    document.getElementById('signupSubmitBtn').addEventListener('click', () => {
-        const email = signupEmail.value.trim();
-        const password = signupPassword.value.trim();
-        const confirmPass = confirmPassword.value.trim();
-        const name = nameInput.value.trim();
-
-        if (!email || !password || !confirmPass || !name) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        if (password !== confirmPass) {
-            alert("Passwords do not match.");
-            return;
-        }
-
-        if (users[email]) {
-            alert("This email is already registered.");
-            return;
-        }
-
-        users[email] = { name, password };
-        alert("Signup successful! Please log in.");
-
-        signupEmail.value = '';
-        signupPassword.value = '';
-        confirmPassword.value = '';
-        nameInput.value = '';
-
-        signupScreen.classList.add('hidden');
-        openScreen.classList.remove('hidden');
-    });
-
+});
     // Reward Submission Functionality
     document.getElementById('submitRewardBtn').addEventListener('click', () => {
         const name = rewardName.value.trim();
