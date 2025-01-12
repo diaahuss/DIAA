@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const templateID = "template_y0f3pw9";
     const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
 
+    // Clear login fields on page load
+    openEmail.value = '';
+    openPassword.value = '';
+    
     // Login Functionality
     document.getElementById('loginBtn').addEventListener('click', () => {
         const email = openEmail.value.trim();
