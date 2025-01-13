@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         businessName.value = '';
         businessEmail.value = '';
 
-    emailjs.send("service_4b371jn", "template_y0f3pw9", {
+   emailjs.send("service_4b371jn", "template_y0f3pw9", {
     name: name,
     email: email,
     voucher_code: voucher,
@@ -117,9 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error("EmailJS Error:", error); // Log the error to see more details
     alert("Failed to send reward data. Please try again.");
 });
-    });
-  
-    // Back Buttons
+      // Back Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
         rewardScreen.classList.remove('hidden');
