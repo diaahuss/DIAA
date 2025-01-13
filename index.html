@@ -3,56 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RWCOIN Rewards</title>
+    <title>RWCOIN App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Login Screen -->
+
+    <!-- OPEN SCREEN -->
     <div id="openScreen" class="screen">
-        <div class="banner">RWCOIN Rewards</div>
-        <input type="email" id="openEmail" placeholder="Email" required>
-        <input type="password" id="openPassword" placeholder="Password" required>
+        <div class="banner">RWCOIN</div>
+        <input type="email" id="openEmail" placeholder="Email">
+        <input type="password" id="openPassword" placeholder="Password">
         <button id="loginBtn">Login</button>
         <button id="signupBtn">Signup</button>
+        <button id="forgotBtn">Forgot Password</button>
+        <p id="feedback" class="note"></p>
     </div>
 
-    <!-- Signup Screen -->
+    <!-- SIGNUP SCREEN -->
     <div id="signupScreen" class="screen hidden">
-        <div class="banner">Create Account</div>
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="email" id="signupEmail" placeholder="Email" required>
-        <input type="password" id="signupPassword" placeholder="Password" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <div class="banner">Signup for RWCOIN</div>
+        <input type="text" id="name" placeholder="Name">
+        <input type="email" id="signupEmail" placeholder="Email">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
         <button id="signupSubmitBtn">Signup</button>
         <button id="backToOpen">Back</button>
+        <p id="signupFeedback" class="note"></p>
     </div>
 
-    <!-- Reward Screen -->
+    <!-- REWARD SCREEN -->
     <div id="rewardScreen" class="screen hidden">
-        <div class="banner">Submit Rewards</div>
+        <div class="banner">REWARDS</div>
         <input type="text" id="rewardName" placeholder="Name" readonly>
         <input type="email" id="rewardEmail" placeholder="Email" readonly>
-        <input type="text" id="voucherCode" placeholder="Voucher Code" required>
-        <input type="text" id="walletAddress" placeholder="Wallet Address" required>
-        <input type="text" id="businessName" placeholder="Business Name" required>
-        <input type="email" id="businessEmail" placeholder="Business Email" required>
-        <button id="submitRewardBtn">Submit Reward</button>
+        <input type="text" id="voucherCode" placeholder="Voucher Code">
+        <input type="text" id="walletAddress" placeholder="Wallet Address">
+        <input type="text" id="businessName" placeholder="Business Name">
+        <input type="email" id="businessEmail" placeholder="Business Email">
+        <button id="submitRewardBtn">Submit</button>
         <button id="backToLogin">Back</button>
     </div>
 
-    <!-- Transaction Confirmation Screen -->
+    <!-- TRANSACTION SCREEN -->
     <div id="transactionScreen" class="screen hidden">
-        <div class="banner">Transaction Details</div>
-        <p><strong>Name:</strong> <span id="transName"></span></p>
-        <p><strong>Email:</strong> <span id="transEmail"></span></p>
-        <p><strong>Voucher Code:</strong> <span id="transVoucherCode"></span></p>
-        <p><strong>Wallet Address:</strong> <span id="transWallet"></span></p>
-        <p><strong>Business Name:</strong> <span id="transBusinessName"></span></p>
-        <p><strong>Business Email:</strong> <span id="transBusinessEmail"></span></p>
+        <div class="banner">TRANSACTION</div>
+        <p class="transaction-detail">Name: <span id="transName"></span></p>
+        <p class="transaction-detail">Email: <span id="transEmail"></span></p>
+        <p class="transaction-detail">Voucher Code: <span id="transVoucherCode"></span></p>
+        <p class="transaction-detail">Wallet Address: <span id="transWallet"></span></p>
+        <p class="transaction-detail">Business Name: <span id="transBusinessName"></span></p>
+        <p class="transaction-detail">Business Email: <span id="transBusinessEmail"></span></p>
+        <p class="transaction-detail note">Note: Please allow a few days to process the voucher. Thank you.</p>
         <button id="backToReward">Back</button>
     </div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script src="scripts.js"></script>
 </body>
+<script src="scripts.js"></script>
 </html>
