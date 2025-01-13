@@ -1,18 +1,77 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const users = {};
+
+    const openScreen = document.getElementById('openScreen');
+    const signupScreen = document.getElementById('signupScreen');
     const rewardScreen = document.getElementById('rewardScreen');
     const transactionScreen = document.getElementById('transactionScreen');
 
-    const rewardName = document.getElementById('rewardName');
+    const openEmail = document.getElementById('openEmail');
+    const openPassword = document.getElementById('openPassword');
+    const signupEmail = document.getElementById('signupEmail');
+    const signupPassword = document.getElementById('signupPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const nameInput = document.getElementById('name');
     const rewardEmail = document.getElementById('rewardEmail');
+    const rewardName = document.getElementById('rewardName');
     const voucherCode = document.getElementById('voucherCode');
     const walletAddress = document.getElementById('walletAddress');
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
-    const emailRecipient = "diaahussein110@gmail.com";
     const serviceID = "service_4b371jn";
     const templateID = "template_y0f3pw9";
     const userID = "sz2ImWOwFnVKy4qrF";
+
+    // Login
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const email = openEmail.value.trim();
+        const password = openPassword.value.trim();
+
+        if (users[email] && users[email].password === password) {
+            openScreen.classList.add('hidden');
+            rewardScreen.classList.remove('hidden');
+
+            rewardEmail.value = email;
+            rewardName.value = users[email].name;
+        } else {
+            alert("Invalid email or password.");
+        }
+    });
+
+    // Signup
+    document.getElementById('signupSubmitBtn').addEventListener('click', () => {
+        const email = signupEmail.value.trim();
+        const password = signupPassword.value.trim();
+        const confirmPass = confirmPassword.value.trim();
+        const name = nameInput.value.trim();
+
+        if (!email || !password || !confirmPass || !name) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        if (password !== confirmPass) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        if (users[email]) {
+            alert("This email is already registered.");
+            return;
+        }
+
+        users[email] = { name, password };
+        alert("Signup successful! Please log in.");
+
+        signupEmail.value = '';
+        signupPassword.value = '';
+        confirmPassword.value = '';
+        nameInput.value = '';
+
+        signupScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
+    });
 
     // Rewards Submission
     document.getElementById('submitRewardBtn').addEventListener('click', () => {
@@ -38,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('transBusinessName').textContent = business;
         document.getElementById('transBusinessEmail').textContent = businessEmailValue;
 
-        // Send email via emailjs
         emailjs.send(serviceID, templateID, {
             name,
             email,
@@ -46,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             wallet_address: wallet,
             business_name: business,
             business_email: businessEmailValue,
-            to_email: emailRecipient
         })
         .then(() => {
             alert("Reward data has been emailed successfully!");
@@ -65,9 +122,24 @@ document.addEventListener('DOMContentLoaded', () => {
         businessEmail.value = '';
     });
 
-    // Back Button to Reward Screen
+    // Navigation Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
         rewardScreen.classList.remove('hidden');
+    });
+
+    document.getElementById('backToLogin').addEventListener('click', () => {
+        rewardScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
+    });
+
+    document.getElementById('signupBtn').addEventListener('click', () => {
+        openScreen.classList.add('hidden');
+        signupScreen.classList.remove('hidden');
+    });
+
+    document.getElementById('backToOpen').addEventListener('click', () => {
+        signupScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
     });
 });
