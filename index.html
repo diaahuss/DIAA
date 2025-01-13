@@ -1,73 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const rewardScreen = document.getElementById('rewardScreen');
-    const transactionScreen = document.getElementById('transactionScreen');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RWCOIN App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
 
-    const rewardName = document.getElementById('rewardName');
-    const rewardEmail = document.getElementById('rewardEmail');
-    const voucherCode = document.getElementById('voucherCode');
-    const walletAddress = document.getElementById('walletAddress');
-    const businessName = document.getElementById('businessName');
-    const businessEmail = document.getElementById('businessEmail');
+    <!-- OPEN SCREEN -->
+    <div id="openScreen" class="screen">
+        <div class="banner">RWCOIN</div>
+        <input type="email" id="openEmail" placeholder="Enter your email">
+        <input type="password" id="openPassword" placeholder="Enter your password">
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn">Sign Up</button>
+        <button id="forgotBtn">Forgot Password</button>
+        <p id="feedback" class="note"></p>
+    </div>
 
-    const emailRecipient = "diaahussein110@gmail.com";
-    const serviceID = "service_4b371jn";
-    const templateID = "template_y0f3pw9";
-    const userID = "sz2ImWOwFnVKy4qrF";
+    <!-- REWARD SCREEN -->
+    <div id="rewardScreen" class="screen hidden">
+        <div class="banner">Reward Submission</div>
+        <input type="text" id="rewardName" placeholder="Name" readonly>
+        <input type="email" id="rewardEmail" placeholder="Email" readonly>
+        <input type="text" id="voucherCode" placeholder="Voucher Code">
+        <input type="text" id="walletAddress" placeholder="Wallet Address">
+        <input type="text" id="businessName" placeholder="Business Name">
+        <input type="email" id="businessEmail" placeholder="Business Email">
+        <button id="submitRewardBtn">Submit Reward</button>
+        <button id="backToReward">Back</button>
+    </div>
 
-    // Rewards Submission
-    document.getElementById('submitRewardBtn').addEventListener('click', () => {
-        const name = rewardName.value.trim();
-        const email = rewardEmail.value.trim();
-        const voucher = voucherCode.value.trim();
-        const wallet = walletAddress.value.trim();
-        const business = businessName.value.trim();
-        const businessEmailValue = businessEmail.value.trim();
+    <!-- TRANSACTION SCREEN -->
+    <div id="transactionScreen" class="screen hidden">
+        <div class="banner">Transaction Details</div>
+        <p class="transaction-detail">Name: <span id="transName"></span></p>
+        <p class="transaction-detail">Email: <span id="transEmail"></span></p>
+        <p class="transaction-detail">Voucher Code: <span id="transVoucherCode"></span></p>
+        <p class="transaction-detail">Wallet Address: <span id="transWallet"></span></p>
+        <p class="transaction-detail">Business Name: <span id="transBusinessName"></span></p>
+        <p class="transaction-detail">Business Email: <span id="transBusinessEmail"></span></p>
+        <p class="transaction-detail note">Note: Processing may take a few days. Thank you for your patience.</p>
+        <button id="backToReward">Back</button>
+    </div>
 
-        if (!name || !email || !voucher || !wallet || !business || !businessEmailValue) {
-            alert("Please complete all fields.");
-            return;
-        }
-
-        transactionScreen.classList.remove('hidden');
-        rewardScreen.classList.add('hidden');
-
-        document.getElementById('transName').textContent = name;
-        document.getElementById('transEmail').textContent = email;
-        document.getElementById('transVoucherCode').textContent = voucher;
-        document.getElementById('transWallet').textContent = wallet;
-        document.getElementById('transBusinessName').textContent = business;
-        document.getElementById('transBusinessEmail').textContent = businessEmailValue;
-
-        // Send email via emailjs
-        emailjs.send(serviceID, templateID, {
-            name,
-            email,
-            voucher_code: voucher,
-            wallet_address: wallet,
-            business_name: business,
-            business_email: businessEmailValue,
-            to_email: emailRecipient
-        })
-        .then(() => {
-            alert("Reward data has been emailed successfully!");
-        })
-        .catch(error => {
-            console.error("EmailJS Error:", error);
-            alert("Failed to send reward data. Please try again.");
-        });
-
-        // Reset the form after submission
-        rewardName.value = '';
-        rewardEmail.value = '';
-        voucherCode.value = '';
-        walletAddress.value = '';
-        businessName.value = '';
-        businessEmail.value = '';
-    });
-
-    // Back Button to Reward Screen
-    document.getElementById('backToReward').addEventListener('click', () => {
-        transactionScreen.classList.add('hidden');
-        rewardScreen.classList.remove('hidden');
-    });
-});
+</body>
+</html>
