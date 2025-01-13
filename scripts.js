@@ -102,15 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
         businessName.value = '';
         businessEmail.value = '';
 
-          // EmailJS Send Email
-        emailjs.send("service_4b371jn", "template_y0f3pw9", {
-            name: name,
-            email: email,
-            voucher_code: voucher,
-            wallet_address: wallet,
-            business_name: business,
-            business_email: businessEmailValue,
-        })
+    emailjs.send("service_4b371jn", "template_y0f3pw9", {
+    name: name,
+    email: email,
+    voucher_code: voucher,
+    wallet_address: wallet,
+    business_name: business,
+    business_email: businessEmailValue,
+});
         .then(() => {
             alert("Reward data has been emailed to RWCOIN successfully!");
         })
