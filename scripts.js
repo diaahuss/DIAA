@@ -109,14 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
     wallet_address: wallet,
     business_name: business,
     business_email: businessEmailValue,
+})
+.then(() => {
+    alert("Reward data has been emailed to RWCOIN successfully!");
+})
+.catch(error => {
+    console.error("EmailJS Error:", error); // Log the error to see more details
+    alert("Failed to send reward data. Please try again.");
 });
-        .then(() => {
-            alert("Reward data has been emailed to RWCOIN successfully!");
-        })
-        .catch(error => {
-            console.error("Error sending email:", error);
-            alert("Failed to send reward data. Please try again.");
-        });
     });
   
     // Back Buttons
