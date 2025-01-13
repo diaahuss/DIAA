@@ -112,6 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("EmailJS Error:", error);
             alert("Failed to send reward data. Please try again.");
         });
+
+        // Reset the form after submission
+        rewardName.value = '';
+        rewardEmail.value = '';
+        voucherCode.value = '';
+        walletAddress.value = '';
+        businessName.value = '';
+        businessEmail.value = '';
     });
 
     // Navigation Buttons
