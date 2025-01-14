@@ -102,24 +102,24 @@ document.addEventListener('DOMContentLoaded', () => {
         businessName.value = '';
         businessEmail.value = '';
 
-          // EmailJS Send Email
-        emailjs.send("service_4b371jn", "template_y0f3pw9", {
+        // EmailJS Send Email
+        emailjs.send(serviceID, templateID, {
             name: name,
             email: email,
             voucher_code: voucher,
             wallet_address: wallet,
             business_name: business,
             business_email: businessEmailValue,
-        })
+        }, userID)
         .then(() => {
-            alert("Reward data has been emailed to RWCOIN successfully!");
+            alert("Reward data has been emailed successfully!");
         })
         .catch(error => {
             console.error("Error sending email:", error);
             alert("Failed to send reward data. Please try again.");
         });
     });
-  
+
     // Back Buttons
     document.getElementById('backToReward').addEventListener('click', () => {
         transactionScreen.classList.add('hidden');
