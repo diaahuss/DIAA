@@ -34,10 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             rewardEmail.value = email;
             rewardName.value = users[email].name;
-
-            // Clear the login form
-            openEmail.value = '';
-            openPassword.value = '';
         } else {
             alert("Invalid email or password.");
         }
