@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             business_email: businessEmailValue,
         }, userID)
         .then(() => {
-            alert("Reward data has been emailed successfully!");
+            alert("Reward data has been emailed to diaahussein110@gmail.com successfully!");
         })
         .catch(error => {
             console.error("Error sending email:", error);
