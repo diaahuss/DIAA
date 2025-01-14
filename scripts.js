@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             rewardEmail.value = email;
             rewardName.value = users[email].name;
+
+            // Clear the login form
+            openEmail.value = '';
+            openPassword.value = '';
         } else {
             alert("Invalid email or password.");
         }
@@ -112,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             business_email: businessEmailValue,
         }, userID)
         .then(() => {
-            alert("Reward data has been emailed to diaahussein110@gmail.com successfully!");
+            alert("Reward data has been emailed successfully!");
         })
         .catch(error => {
             console.error("Error sending email:", error);
@@ -130,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rewardScreen.classList.add('hidden');
         openScreen.classList.remove('hidden');
 
+        // Clear login form
         openEmail.value = '';
         openPassword.value = '';
     });
